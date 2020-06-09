@@ -1,0 +1,32 @@
+import os
+import pandas as pd
+import py_midicsv
+
+for file in os.listdir("Test_results"):
+
+    file_path = "Test_results/" + file
+
+    df = pd.read_csv(file_path)
+    df.insert(2, "Channel", 0)
+    df.insert(0, "Track", 1)
+    csv_file = "Test_results/" + file
+    df.to_csv(csv_file, index=False)
+
+    with open(csv_file, "r") as f:
+        lines = f.readlines()
+
+    end_time = lines[-1].split(",")[1]
+
+    lines[0] = "1,0,Start_track\n"
+    lines.append("1," + end_time + ",End_track")
+
+    with open(csv_file, "w") as f:
+        f.writelines(lines)
+
+    midi_object = py_midicsv.csv_to_midi(csv_file)
+
+    midi_file = "Test_results/" + file.replace("csv", "mid")
+
+    with open(midi_file, "wb") as output_file:
+        midi_writer = py_midicsv.FileWriter(output_file)
+        midi_writer.write(midi_object)
