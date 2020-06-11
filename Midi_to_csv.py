@@ -51,30 +51,28 @@ def main(dir_in, dir_out, transpose=True):
             # Transpose the piece up 4 and down 4, saving it to a new file every time
             df_transpose = df.copy(deep=True)
             # up to 4
-            for i in range(5):
+            for i in range(1, 5):
                 df_transpose["Note"] = df["Note"]
-                if i == 0:
-                    continue
 
-                else:
-                    # splices the transpose number between filename and extension
-                    file_transpose = file[:-4] + "Transpose_up" + str(i) + ".csv"
-                    df_transpose["Note"] = df_transpose["Note"].astype('int32')
-                    df_transpose["Note"] += i
+                # splices the transpose number between filename and extension
+                file_transpose = file[:-4] + "Transpose_up" + str(i) + ".csv"
+                df_transpose["Note"] = df_transpose["Note"].astype('int32')
+                df_transpose["Note"] += i
 
-                    with open(file_transpose, 'w'):
-                        df_transpose.to_csv(file_transpose, index=False)
+                with open(file_transpose, 'w'):
+                    df_transpose.to_csv(file_transpose, index=False)
 
             # down to 4
-            for i in range(5):
+            for i in range(1, 5):
                 df_transpose["Note"] = df["Note"]
-                if i == 0:
-                    continue
-                else:
-                    # splices the transpose number between filename and extension
-                    file_transpose = file[:-4] + "Transpose_down" + str(i) + ".csv"
-                    df_transpose["Note"] = df_transpose["Note"].astype('int32')
-                    df_transpose["Note"] -= i
 
-                    with open(file_transpose, 'w'):
-                        df_transpose.to_csv(file_transpose, index=False)
+                # splices the transpose number between filename and extension
+                file_transpose = file[:-4] + "Transpose_down" + str(i) + ".csv"
+                df_transpose["Note"] = df_transpose["Note"].astype('int32')
+                df_transpose["Note"] -= i
+
+                with open(file_transpose, 'w'):
+                    df_transpose.to_csv(file_transpose, index=False)
+
+
+main("transpose_test", "Transpose_csv_test")
