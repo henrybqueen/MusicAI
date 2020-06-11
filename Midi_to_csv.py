@@ -74,5 +74,3 @@ def main(dir_in, dir_out, transpose=True):
                 with open(file_transpose, 'w'):
                     df_transpose.to_csv(file_transpose, index=False)
 
-
-main("transpose_test", "Transpose_csv_test")
